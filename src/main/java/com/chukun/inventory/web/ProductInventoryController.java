@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author chukun
@@ -29,9 +30,11 @@ public class ProductInventoryController {
     public ResponseData updateProductInventory(ProductInventory productInventory){
         ResponseData responseData = null;
         try{
+            System.out.println("updateProductInventory coming.....");
             InventoryRequest request = new ProductInventoryDBUpdateRequest(productInventory,productInventoryService);
             requestAsyncProcessService.process(request);
             responseData = new ResponseData(ResponseData.SUCCESS);
+            System.out.println("updateProductInventory success.....");
         }catch (Exception e){
             responseData = new ResponseData(ResponseData.FAILURE);
         }
@@ -49,6 +52,7 @@ public class ProductInventoryController {
         ProductInventory productInventory = null;
 
         try{
+            System.out.println("getProductInventory coming.....");
             InventoryRequest request = new ProductInventoryCacheRefreshRequest(
                     productId, productInventoryService);
             requestAsyncProcessService.process(request);
@@ -69,7 +73,7 @@ public class ProductInventoryController {
                     return productInventory;
                 }else{
                     //没取到，就等待20毫秒
-                    Thread.sleep(20);
+                    TimeUnit.MILLISECONDS.sleep(20);
                     endTime = System.currentTimeMillis();
                     waitTime = endTime - startTime;
                 }
@@ -80,7 +84,7 @@ public class ProductInventoryController {
                 return productInventory;
             }
         }catch (Exception e){
-
+            e.printStackTrace();
         }
         //实在获取不到，说明没有此数据，就返回空数据
         return new ProductInventory(productId, -1L);

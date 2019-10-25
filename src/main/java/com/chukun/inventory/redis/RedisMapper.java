@@ -38,4 +38,13 @@ public class RedisMapper {
     public void delete(String key) {
         redisTemplate.delete(key);
     }
+
+    /**
+     * 判断是否有此key
+     * @param key
+     * @return
+     */
+    public boolean existKey(String key){
+        return redisTemplate.hasKey(key);
+    }
 }

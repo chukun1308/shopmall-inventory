@@ -29,8 +29,10 @@ public class ProductInventoryCacheRefreshRequest implements InventoryRequest {
 	public void process() {
 		// 从数据库中查询最新的商品库存数量
 		ProductInventory productInventory = productInventoryService.findProductInventory(productId);
+		System.out.println("获取数据库数据 : productInventory id : "+productInventory.getProductId()+" 数据库当前库存: "+productInventory.getInventoryCnt());
 		// 将最新的商品库存数量，刷新到redis缓存中去
-		productInventoryService.setProductInventoryCache(productInventory); 
+		productInventoryService.setProductInventoryCache(productInventory);
+		System.out.println("刷新redis缓存 : productInventory id : "+productInventory.getProductId()+" redis当前库存: "+productInventory.getInventoryCnt());
 	}
 	
 	public Integer getProductId() {

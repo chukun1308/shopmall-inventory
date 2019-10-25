@@ -4,6 +4,8 @@ package com.chukun.inventory.request;
 import com.chukun.inventory.model.ProductInventory;
 import com.chukun.inventory.service.ProductInventoryService;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * 比如说一个商品发生了交易，那么就要修改这个商品对应的库存
  * 
@@ -36,10 +38,19 @@ public class ProductInventoryDBUpdateRequest implements InventoryRequest {
 	
 	@Override
 	public void process() {
+		System.out.println("删除redis缓存 : productInventory id : "+productInventory.getProductId()+" 当前更新库存: "+productInventory.getInventoryCnt());
 		// 删除redis中的缓存
 		productInventoryService.removeProductInventoryCache(productInventory); 
 		// 修改数据库中的库存
-		productInventoryService.updateProductInventory(productInventory);  
+		System.out.println("更新数据库存 : productInventory id : "+productInventory.getProductId()+" 当前更新库存: "+productInventory.getInventoryCnt());
+		productInventoryService.updateProductInventory(productInventory);
+
+		try {
+			TimeUnit.SECONDS.sleep(5);
+			System.out.println("更新数据库存 sleep 5s");
+		} catch (InterruptedException e) {
+
+		}
 	}
 	
 	/**

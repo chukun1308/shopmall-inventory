@@ -9,6 +9,7 @@
 .idea/**/shelf
 .idea
 .mvn
+target/
 shopmall-inventory.iml
 
 # Generated files

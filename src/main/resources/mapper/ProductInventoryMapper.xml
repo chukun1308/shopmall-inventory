@@ -8,7 +8,7 @@
   	</update>
   	 
   	<select id="findProductInventory" resultType="com.chukun.inventory.model.ProductInventory">
-  		select product_id as "productId",inventory_cnt as "inventoryCnt" from product_inventory where product_id=#{productId}
+  		select product_id productId,inventory_cnt inventoryCnt from product_inventory where product_id=#{productId}
   	</select>
  
 </mapper>

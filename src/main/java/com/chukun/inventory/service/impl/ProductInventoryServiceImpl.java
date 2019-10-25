@@ -59,8 +59,10 @@ public class ProductInventoryServiceImpl implements ProductInventoryService {
 		Long inventoryCnt = 0L;
 		
 		String key = "product:inventory:" + productId;
-		String result = redisMapper.get(key).toString();
-		
+		String result = null;
+		if(redisMapper.existKey(key)) {
+			result = redisMapper.get(key).toString();
+		}
 		if(result != null && !"".equals(result)) {
 			try {
 				inventoryCnt = Long.valueOf(result);

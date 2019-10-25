@@ -39,6 +39,7 @@ public class RequestAsyncProcessServiceImpl implements RequestAsyncProcessServic
         // 用内存队列的数量对hash值取模之后，结果一定是在0~7之间
         // 所以任何一个商品id都会被固定路由到同样的一个内存队列中去的
         int index = (requestQueue.queueSize()-1) & hash;
+        System.out.println("获取内存队列: "+index);
         return requestQueue.getQueue(index);
     }
 }
