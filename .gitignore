@@ -7,6 +7,9 @@
 .idea/**/usage.statistics.xml
 .idea/**/dictionaries
 .idea/**/shelf
+.idea
+.mvn
+shopmall-inventory.iml
 
 # Generated files
 .idea/**/contentModel.xml
